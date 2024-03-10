@@ -1,0 +1,181 @@
+package Generador;
+import java_cup.runtime.*;
+
+parser code 
+{:
+    public void syntax_error(Symbol s){
+        System.out.println("Error sintáctico: "+s.value+" linea: "+s.left+" columna: "+s.right);
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("Error sintáctico unrecovered: "+s.value+" linea: "+s.left+" columna: "+s.right);
+    }
+:}
+
+terminal String ADD, MINUS, TIMES, DIV, ENTERO, DECIMAL, PRINT, CON, COL;
+terminal String VAR, END_VAR, PROGRAM, END_PROGRAM, ARR, AT, END_ARR, LBRACKET,IGUAL, RBRACKET, COMMA, DEST,TIPO,OP, PARDER, ID, FIN, MAS, MENOS, LINEA, PYC;
+terminal String CADENA;
+
+non terminal Arbol list;
+non terminal String variable;
+non terminal Arbol list_var;
+non terminal Arbol list_expresion;
+non terminal Arbol expresion, list_cod,list_arreglos,list_varA, tipo_arreglo;
+
+
+precedence left ADD, MINUS;
+precedence left TIMES, DIV;
+
+start with list;
+
+list ::= PROGRAM list_cod:list_c END_PROGRAM {:
+        Arbol list = new Arbol("list");
+        list.añadirHijo(list_c);
+        System.out.println(list_c.lexema);
+        System.out.print("wenas");
+        RESULT = list; :}
+        ;
+
+list_cod ::= list_cod:list list_expresion:list_cexp {:
+Arbol expresion = new Arbol ("list_cod");
+expresion.añadirHijo(list);
+expresion.añadirHijo(list_cexp);
+
+RESULT=expresion;
+:}
+|list_expresion:list_exp {:
+ Arbol expresion = new Arbol("list_cod");
+                                                       expresion.añadirHijo(list_exp);
+System.out.print("aqui"+ expresion.lexema);
+                                                       RESULT = expresion;
+:}
+;
+
+
+list_expresion ::= list_var:listVar {: 
+                                                       Arbol expresion = new Arbol("list_expresion");
+                                                       expresion.añadirHijo(listVar);
+                                                       System.out.println("aqui"+ expresion.lexema +" aqui "+ expresion.hijos.get(0).hijos.get(0).lexema);
+                                                       RESULT = expresion;
+ :}
+               |list_arreglos:array {:
+                                                       Arbol expresion = new Arbol("list_expresion");
+                                                       expresion.añadirHijo(array);
+                                                       RESULT = expresion;
+:}
+               | expresion:exp                        {: 
+                                                       Arbol expresion = new Arbol("list_expresion");
+                                                       expresion.añadirHijo(exp);
+                                                       RESULT = expresion;
+ :}             
+               ;
+
+expresion ::= OP:$0 expresion:$1 COMMA:$2 expresion:$3  PARDER:$4     {: 
+                                                       Arbol expresion = new Arbol("expresion");
+                                                       expresion.añadirHijo(new Arbol($0));
+                                                       expresion.añadirHijo($1);
+                                                       expresion.añadirHijo(new Arbol($2));
+                                                       expresion.añadirHijo($3);
+                                                       expresion.añadirHijo(new Arbol($4));
+                                                       System.out.println("expresion");
+                                                       RESULT = expresion;
+
+                                                       
+ :}
+            |OP:$0 tipo_arreglo:$1 PARDER:$2 {:
+                                                       Arbol expresion = new Arbol("expresion");
+                                                       expresion.añadirHijo(new Arbol ($0));
+                                                       expresion.añadirHijo($1);
+                                                       expresion.añadirHijo(new Arbol ($2));
+                                                       System.out.println(" arreglo");
+                                                       RESULT = expresion;
+:}  
+            | ENTERO:$1                             {: Arbol expresion = new Arbol("expresion");
+
+                                                       expresion.añadirHijo(new Arbol($1));
+                                                       RESULT = expresion;:} 
+            | DECIMAL:$1                            {: Arbol expresion = new Arbol("expresion");
+                                                       expresion.añadirHijo(new Arbol($1));
+                                                       RESULT = expresion;
+ :} 
+            | CADENA:$1                             {: Arbol expresion = new Arbol("expresion");
+                                                       expresion.añadirHijo(new Arbol($1));
+                                                       RESULT = expresion; :}
+            | ID:$0 {: 
+                                                       Arbol expresion = new Arbol("expresion");
+                                                       expresion.añadirHijo(new Arbol($0));
+                                                       RESULT = expresion;
+:}
+            ;
+
+
+list_var ::= VAR:$0 DEST:$1 TIPO:$2 DEST:$3 DEST:$4 ID:$5 MENOS:$6 LINEA:$7 expresion:$8 END_VAR:$9 PYC:$10    {:
+Arbol list_var = new Arbol ("list_var");
+list_var.añadirHijo(new Arbol($0));
+list_var.añadirHijo(new Arbol($1));
+list_var.añadirHijo(new Arbol($2));
+list_var.añadirHijo(new Arbol($3));
+list_var.añadirHijo(new Arbol($4));
+list_var.añadirHijo(new Arbol($5));
+list_var.añadirHijo(new Arbol($6));
+list_var.añadirHijo(new Arbol($7));
+list_var.añadirHijo($8);
+list_var.añadirHijo(new Arbol($9));
+list_var.añadirHijo(new Arbol($10));
+
+
+
+RESULT = list_var;
+:};
+
+list_arreglos ::= ARR:$0 DEST:$1 TIPO:$2 DEST:$3 DEST:$4 AT:$5 ID:$6 MENOS:$7 LINEA:$8 LBRACKET:$9 list_varA:$10 RBRACKET:$11 END_VAR:$12 PYC:$13 {:
+Arbol list_varA = new Arbol ("list_arreglos");
+list_varA.añadirHijo(new Arbol($0));
+list_varA.añadirHijo(new Arbol($1));
+list_varA.añadirHijo(new Arbol($2));
+list_varA.añadirHijo(new Arbol($3));
+list_varA.añadirHijo(new Arbol($4));
+list_varA.añadirHijo(new Arbol($5));
+list_varA.añadirHijo(new Arbol($6));
+list_varA.añadirHijo(new Arbol($7));
+list_varA.añadirHijo(new Arbol($8));
+list_varA.añadirHijo(new Arbol($9));
+list_varA.añadirHijo($10);
+list_varA.añadirHijo(new Arbol($11));
+list_varA.añadirHijo(new Arbol($12));
+list_varA.añadirHijo(new Arbol($13));
+System.out.println("lista arreglo");
+RESULT = list_varA;
+:}
+;
+
+
+list_varA ::= list_varA:$0 COMMA:$1 expresion:$2{:
+Arbol list_varA = new Arbol ("list_arreglos");
+list_varA.añadirHijo($0);
+list_varA.añadirHijo(new Arbol ($1));
+list_varA.añadirHijo($2);
+RESULT = list_varA;
+:}
+| expresion:$0{:
+Arbol list_varA = new Arbol ("list_arreglos");
+list_varA.añadirHijo($0);
+RESULT = list_varA;
+:}
+;
+
+tipo_arreglo ::= list_arreglos:$0 {:
+Arbol list_varA = new Arbol ("list_arreglos");
+list_varA.añadirHijo($0);
+System.out.println("tipo arreglo");
+
+RESULT = list_varA;
+:}
+| AT:$0 ID:$1 {:
+Arbol list_varA = new Arbol ("list_arreglos");
+list_varA.añadirHijo(new Arbol ($0));
+list_varA.añadirHijo(new Arbol ($1));
+RESULT = list_varA;
+:}
+;
+
+
