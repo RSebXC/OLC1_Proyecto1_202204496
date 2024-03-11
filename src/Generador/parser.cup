@@ -1,5 +1,6 @@
 package Generador;
 import java_cup.runtime.*;
+import Generador.Globales;
 
 parser code 
 {:
@@ -11,15 +12,16 @@ parser code
     }
 :}
 
-terminal String ADD, MINUS, TIMES, DIV, ENTERO, DECIMAL, PRINT, CON, COL;
+terminal String ADD, MINUS, TIMES, DIV, ENTERO, DECIMAL, PRINT, CON, COL, ES;
 terminal String VAR, END_VAR, PROGRAM, END_PROGRAM, ARR, AT, END_ARR, LBRACKET,IGUAL, RBRACKET, COMMA, DEST,TIPO,OP, PARDER, ID, FIN, MAS, MENOS, LINEA, PYC;
 terminal String CADENA;
 
 non terminal Arbol list;
 non terminal String variable;
 non terminal Arbol list_var;
-non terminal Arbol list_expresion;
+non terminal Arbol list_expresion, argumentos;
 non terminal Arbol expresion, list_cod,list_arreglos,list_varA, tipo_arreglo;
+non terminal cadena, imprimir, valor,variab;
 
 
 precedence left ADD, MINUS;
@@ -32,6 +34,7 @@ list ::= PROGRAM list_cod:list_c END_PROGRAM {:
         list.añadirHijo(list_c);
         System.out.println(list_c.lexema);
         System.out.print("wenas");
+        Globales.imprimirHashMap();
         RESULT = list; :}
         ;
 
@@ -66,46 +69,50 @@ list_expresion ::= list_var:listVar {:
                                                        Arbol expresion = new Arbol("list_expresion");
                                                        expresion.añadirHijo(exp);
                                                        RESULT = expresion;
- :}             
+ :}            | cadena
                ;
 
-expresion ::= OP:$0 expresion:$1 COMMA:$2 expresion:$3  PARDER:$4     {: 
-                                                       Arbol expresion = new Arbol("expresion");
-                                                       expresion.añadirHijo(new Arbol($0));
-                                                       expresion.añadirHijo($1);
-                                                       expresion.añadirHijo(new Arbol($2));
-                                                       expresion.añadirHijo($3);
-                                                       expresion.añadirHijo(new Arbol($4));
-                                                       System.out.println("expresion");
-                                                       RESULT = expresion;
-
-                                                       
- :}
-            |OP:$0 tipo_arreglo:$1 PARDER:$2 {:
-                                                       Arbol expresion = new Arbol("expresion");
-                                                       expresion.añadirHijo(new Arbol ($0));
-                                                       expresion.añadirHijo($1);
-                                                       expresion.añadirHijo(new Arbol ($2));
-                                                       System.out.println(" arreglo");
-                                                       RESULT = expresion;
-:}  
-            | ENTERO:$1                             {: Arbol expresion = new Arbol("expresion");
-
-                                                       expresion.añadirHijo(new Arbol($1));
-                                                       RESULT = expresion;:} 
-            | DECIMAL:$1                            {: Arbol expresion = new Arbol("expresion");
-                                                       expresion.añadirHijo(new Arbol($1));
-                                                       RESULT = expresion;
- :} 
-            | CADENA:$1                             {: Arbol expresion = new Arbol("expresion");
-                                                       expresion.añadirHijo(new Arbol($1));
-                                                       RESULT = expresion; :}
-            | ID:$0 {: 
-                                                       Arbol expresion = new Arbol("expresion");
-                                                       expresion.añadirHijo(new Arbol($0));
-                                                       RESULT = expresion;
+expresion ::= OP:$0 expresion:$1 COMMA:$2 expresion:$3 PARDER:$4 {:
+    Arbol expresion = new Arbol("expresion");
+    expresion.añadirHijo(new Arbol($0));
+    expresion.añadirHijo($1);
+    expresion.añadirHijo(new Arbol($2));
+    expresion.añadirHijo($3);
+    expresion.añadirHijo(new Arbol($4));
+    System.out.println("expresion");
+    RESULT = expresion;
 :}
-            ;
+| ES:$0 tipo_arreglo:$1 PARDER:$2 {:
+    Arbol expresion = new Arbol("expresion");
+    expresion.añadirHijo(new Arbol($0));
+    expresion.añadirHijo($1);
+    expresion.añadirHijo(new Arbol($2));
+    System.out.println(" arreglo");
+    System.out.println("bebe" + $1);
+    RESULT = expresion;
+:}  
+| ENTERO:$1 {:
+    Arbol expresion = new Arbol("expresion");
+    expresion.añadirHijo(new Arbol($1));
+    RESULT = expresion;
+:} 
+| DECIMAL:$1 {:
+    Arbol expresion = new Arbol("expresion");
+    expresion.añadirHijo(new Arbol($1));
+    RESULT = expresion;
+:} 
+| CADENA:$1 {:
+    Arbol expresion = new Arbol("expresion");
+    expresion.añadirHijo(new Arbol($1));
+    RESULT = expresion;
+:}
+| AT:$0 ID:$1 {:
+    Arbol expresion = new Arbol("expresion");
+    expresion.añadirHijo(new Arbol($0));
+    expresion.añadirHijo(new Arbol($1));
+    RESULT = expresion;
+:}
+;
 
 
 list_var ::= VAR:$0 DEST:$1 TIPO:$2 DEST:$3 DEST:$4 ID:$5 MENOS:$6 LINEA:$7 expresion:$8 END_VAR:$9 PYC:$10    {:
@@ -121,7 +128,9 @@ list_var.añadirHijo(new Arbol($7));
 list_var.añadirHijo($8);
 list_var.añadirHijo(new Arbol($9));
 list_var.añadirHijo(new Arbol($10));
-
+String id = $5.toString();
+Object valor = $8.getHijos().get(0).getLexema();
+Globales.guardarVariables(id, valor);
 
 
 RESULT = list_var;
@@ -144,38 +153,69 @@ list_varA.añadirHijo(new Arbol($11));
 list_varA.añadirHijo(new Arbol($12));
 list_varA.añadirHijo(new Arbol($13));
 System.out.println("lista arreglo");
+
 RESULT = list_varA;
 :}
 ;
 
 
 list_varA ::= list_varA:$0 COMMA:$1 expresion:$2{:
-Arbol list_varA = new Arbol ("list_arreglos");
+Arbol list_varA = new Arbol ("list_varA");
 list_varA.añadirHijo($0);
 list_varA.añadirHijo(new Arbol ($1));
 list_varA.añadirHijo($2);
 RESULT = list_varA;
 :}
 | expresion:$0{:
-Arbol list_varA = new Arbol ("list_arreglos");
+Arbol list_varA = new Arbol ("list_varA");
 list_varA.añadirHijo($0);
 RESULT = list_varA;
 :}
 ;
 
-tipo_arreglo ::= list_arreglos:$0 {:
-Arbol list_varA = new Arbol ("list_arreglos");
-list_varA.añadirHijo($0);
+tipo_arreglo ::= LBRACKET:$0 list_varA:$1 RBRACKET:$2{:
+Arbol list_arreglos = new Arbol ("Tipo_arreglo");
+list_arreglos.añadirHijo(new Arbol($0));
+list_arreglos.añadirHijo($1);
+list_arreglos.añadirHijo(new Arbol($2));
 System.out.println("tipo arreglo");
 
-RESULT = list_varA;
+RESULT = list_arreglos;
 :}
 | AT:$0 ID:$1 {:
-Arbol list_varA = new Arbol ("list_arreglos");
+Arbol list_varA = new Arbol ("Tipo_arreglo");
 list_varA.añadirHijo(new Arbol ($0));
 list_varA.añadirHijo(new Arbol ($1));
 RESULT = list_varA;
 :}
 ;
 
+cadena ::= CON DEST DEST PRINT IGUAL imprimir:$5 END_VAR PYC {:
+    System.out.println($5.toString());
 
+:}
+;
+
+imprimir ::= imprimir:$0 COMMA valor:$1{:
+    RESULT = $0.toString()+","+$1.toString();
+:}
+| valor:$0 {:
+    RESULT = $0.toString(); :};
+
+valor ::= ENTERO:$0{:
+RESULT = Double.valueOf($0.toString());
+:}
+|DECIMAL:$1 {:
+RESULT = Double.valueOf($1.toString());
+:}
+|CADENA:$2 {:
+RESULT = $2.toString();
+:}
+| variab:vari{:
+RESULT = vari;
+:}
+;
+variab ::= ID:idi{:
+RESULT = Globales.Variables.get(idi.toString());
+:}
+;
