@@ -854,6 +854,7 @@ list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
 list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
+Globales.generarGraficaDeBarras(labelsX, datosY, lexema, lexema, lexema, lexema);
 RESULT = list_varA;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("grafica",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

@@ -266,7 +266,7 @@ public class Arbol {
         }else if ("grafica".equals(raiz.lexema) && raiz.hijos.size() == 1){
             raiz.resultado = raiz.hijos.get(0).resultado;
         }else if ("grafica".equalsIgnoreCase(raiz.lexema)){
-            Globales.generarGraficaDeBarras(labelsX, datosY, lexema, lexema, lexema, lexema);
+            
         }
         else if (raiz.lexema == "tipo_sentencia" && raiz.hijos.size() == 7){
             raiz.resultado = raiz.hijos.get(0).resultado;

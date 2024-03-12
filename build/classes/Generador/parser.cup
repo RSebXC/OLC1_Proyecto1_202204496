@@ -232,6 +232,7 @@ list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
 list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
+Globales.generarGraficaDeBarras(labelsX, datosY, lexema, lexema, lexema, lexema);
 RESULT = list_varA;
 :};
 

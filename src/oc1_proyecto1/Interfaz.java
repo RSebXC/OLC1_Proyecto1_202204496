@@ -5,6 +5,7 @@
 package oc1_proyecto1;
 
 import Generador.Arbol;
+import Generador.Globales;
 import Generador.Parser;
 import Generador.Scanner;
 import Generador.Simbolo;
@@ -62,6 +63,11 @@ public class Interfaz extends javax.swing.JFrame {
         });
 
         jButton4.setText("Reportes");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -184,6 +190,14 @@ public class Interfaz extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
             }}
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String sal= "Errores";
+        String ent = "Tokens";
+        Globales.generarHTMLTokens( ent);
+        Globales.generarHTMLErrores(sal);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

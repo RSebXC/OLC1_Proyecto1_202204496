@@ -38,7 +38,7 @@ public class Globales {
         Variables.put(clave, valor);
     }
     
-    public static void generarHTMLTokens(ArrayList<Token> tokens, String archivoSalida) {
+    public static void generarHTMLTokens( String archivoSalida) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoSalida))) {
             // Escribir la estructura básica del HTML
             writer.write("<html>\n<head>\n<title>Tabla de Tokens</title>\n</head>\n<body>\n");
@@ -53,13 +53,13 @@ public class Globales {
         }
     }
     
-    public static void generarHTMLErrores(ArrayList<Token> errores, String archivoSalida) {
+    public static void generarHTMLErrores( String archivoSalida) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoSalida))) {
             // Escribir la estructura básica del HTML
             writer.write("<html>\n<head>\n<title>Tabla de Errores</title>\n</head>\n<body>\n");
 
             // Escribir la tabla de errores
-            escribirTabla(errores, writer, "Errores");
+            escribirTabla(error, writer, "Errores");
 
             // Cerrar la etiqueta body y html
             writer.write("</body>\n</html>");
