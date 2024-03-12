@@ -4,7 +4,18 @@
  */
 package oc1_proyecto1;
 
+import Generador.Arbol;
+import Generador.Parser;
+import Generador.Scanner;
+import Generador.Simbolo;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jflex.gui.MainFrame;
 
 /**
@@ -37,19 +48,20 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Pestaña");
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Ejecutar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("jButton4");
+        jButton4.setText("Reportes");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -63,6 +75,13 @@ public class Interfaz extends javax.swing.JFrame {
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -80,12 +99,12 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +114,8 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -113,7 +133,57 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        String texto = jTextArea1.getText();
        JOptionPane.showMessageDialog(null, "Texto obtenido:\n" + texto);
+       
+       ArrayList<Simbolo> Tabla = new ArrayList();
+        try {
+            
+
+            Scanner scanner = new Scanner(new BufferedReader(new StringReader(texto)));
+            Parser parser = new Parser(scanner);
+            Arbol raiz = (Arbol) parser.parse().value;
+            
+            System.out.println(raiz);
+            raiz.recorrer(raiz, Tabla);
+            
+            
+            
+        } catch (Exception e) {
+          //  System.out.println(e);
+          e.printStackTrace();
+        }for(Simbolo s : Tabla){
+                System.out.println("id: "+s.id + " Valor: "+s.contenido);
+            }
+       
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        
+        // Filtrar por archivos con extensión .df
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos DF", "df");
+        fileChooser.setFileFilter(filter);
+        
+        int resultado = fileChooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+        java.io.File archivo = fileChooser.getSelectedFile();
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+                // Leer el contenido del archivo
+                StringBuilder contenido = new StringBuilder();
+                String linea;
+
+                while ((linea = br.readLine()) != null) {
+                    contenido.append(linea).append("\n");
+                }
+
+                // Mostrar el contenido en el JTextArea
+                jTextArea1.setText(contenido.toString());
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+            }}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,6 +221,7 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

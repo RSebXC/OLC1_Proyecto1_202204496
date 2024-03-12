@@ -261,28 +261,19 @@ public class Arbol {
     }
 }
             
-
-                /*Object media = calcularMedia(raiz.hijos.get(1).resultado.toString());
-                System.out.println("La media es: " + media);
-    
-            }else if (raiz.hijos.get(0).lexema.equalsIgnoreCase("Medina(")){
-                double resultadoMediana = calcularMediana(raiz.hijos.get(1));
-                System.out.println("La mediana es: " + resultadoMediana);
-            }else if (raiz.hijos.get(0).lexema.equalsIgnoreCase("Moda(")){
-                double resultadoModa = calcularModa(raiz.hijos.get(1));
-                System.out.println("La moda es: " + resultadoModa);
-            }else if (raiz.hijos.get(0).lexema.equalsIgnoreCase("Varianza(")){
-                double resultadoVarianza = calcularVarianza(raiz.hijos.get(1));
-                System.out.println("La varianza es: " + resultadoVarianza);
-            }else if (raiz.hijos.get(0).lexema.equalsIgnoreCase("Max(")){
-                
-            }else if (raiz.hijos.get(0).lexema.equalsIgnoreCase("Min(")){
-            
-            }*/
-            
         
             
-            }
+        }else if ("grafica".equals(raiz.lexema) && raiz.hijos.size() == 1){
+            raiz.resultado = raiz.hijos.get(0).resultado;
+        }else if ("grafica".equalsIgnoreCase(raiz.lexema)){
+            Globales.generarGraficaDeBarras(labelsX, datosY, lexema, lexema, lexema, lexema);
+        }
+        else if (raiz.lexema == "tipo_sentencia" && raiz.hijos.size() == 7){
+            raiz.resultado = raiz.hijos.get(0).resultado;
+        }
+        else if (raiz.lexema == "sentencia" && raiz.hijos.size() == 7){
+            raiz.resultado = raiz.hijos.get(0).resultado;
+        }
         else if (raiz.lexema == "list_cod" && raiz.hijos.size() == 1){
             raiz.resultado = raiz.hijos.get(0).resultado;
         }
@@ -319,77 +310,13 @@ public class Arbol {
             raiz.resultado = list;
         }
         
+        
+        
+        
+        
+        
     }
-    /*
-    public static double calcularMedia(ArrayList<Object> lista) {
-    double suma = 0;
-
-    for (Object elemento : lista) {
-        suma += (Double)elemento;
-    }
-
-    return suma / lista.size();
-}
-
-
-    public static double calcularMediana(double[] arreglo) {
-    Arrays.sort(arreglo);
-    int n = arreglo.length;
-    if (n % 2 == 0) {
-        return (arreglo[n / 2 - 1] + arreglo[n / 2]) / 2.0;
-    } else {
-        return arreglo[n / 2];
-    }
-}
-
-    public static double calcularModa(double[] arreglo) {
-    Map<Double, Integer> frecuencias = new HashMap<>();
-    for (double elemento : arreglo) {
-        frecuencias.put(elemento, frecuencias.getOrDefault(elemento, 0) + 1);
-    }
-    double moda = 0;
-    int maxFrecuencia = 0;
-    for (Map.Entry<Double, Integer> entry : frecuencias.entrySet()) {
-        if (entry.getValue() > maxFrecuencia) {
-            maxFrecuencia = entry.getValue();
-            moda = entry.getKey();
-        }
-    }
-    return moda;
-}
-    public static double calcularVarianza(double[] arreglo) {
-    double media = calcularMedia(arreglo);
-    double sumaDiferenciasCuadrado = 0;
-    for (double elemento : arreglo) {
-        sumaDiferenciasCuadrado += Math.pow(elemento - media, 2);
-    }
-    return sumaDiferenciasCuadrado / arreglo.length;
-}
-
     
- public static double encontrarMaximo(double[] arreglo) {
-    double maximo = Double.NEGATIVE_INFINITY;
-    for (double elemento : arreglo) {
-        maximo = Math.max(maximo, elemento);
-    }
-    return maximo;
-}
-
-public static double encontrarMinimo(double[] arreglo) {
-    double minimo = Double.POSITIVE_INFINITY;
-    for (double elemento : arreglo) {
-        minimo = Math.min(minimo, elemento);
-    }
-    return minimo;
-}
-
-
-*/
-
-
-
-  
-
-
+    
 
 }

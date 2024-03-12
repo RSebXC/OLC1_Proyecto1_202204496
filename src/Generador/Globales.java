@@ -5,11 +5,17 @@
 package Generador;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -82,6 +88,38 @@ public class Globales {
         } else {
             // Si la lista está vacía, escribir un mensaje indicando que no hay elementos
             writer.write("<p>No hay " + titulo.toLowerCase() + " para mostrar.</p>\n");
+        }
+    }
+    
+    public static void generarGraficaDeBarras(String[] labelsX, double[] datosY, String tituloGrafica,
+                                             String tituloEjeX, String tituloEjeY, String nombreArchivo) {
+
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Agregar datos al conjunto de datos
+        for (int i = 0; i < labelsX.length; i++) {
+            dataset.addValue(datosY[i], "Datos", labelsX[i]);
+        }
+        
+
+        // Crear la gráfica
+        JFreeChart chart = ChartFactory.createBarChart(
+                tituloGrafica,
+                tituloEjeX,
+                tituloEjeY,
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+
+        // Guardar la gráfica como una imagen PNG
+        try {
+            ChartUtilities.saveChartAsPNG(new File(nombreArchivo + ".png"), chart, 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

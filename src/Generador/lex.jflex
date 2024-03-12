@@ -47,12 +47,21 @@ ID = [a-zA-Z][a-zA-Z0-9]*
 "Varianza(" { Globales.tokens.add(new Token("Varianza",yyline, yycolumn, yytext())); return new Symbol(sym.ES, yyline, yycolumn, yytext()); }
 "Max(" { Globales.tokens.add(new Token("Mex",yyline, yycolumn, yytext())); return new Symbol(sym.ES, yyline, yycolumn, yytext()); }
 "Min(" { Globales.tokens.add(new Token("Min",yyline, yycolumn, yytext())); return new Symbol(sym.ES, yyline, yycolumn, yytext()); }
+"graphBar" { Globales.tokens.add(new Token("graphBar",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
+"graphPie" { Globales.tokens.add(new Token("graphPie",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
+"graphLine" { Globales.tokens.add(new Token("graphLine",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
+"titulo" { Globales.tokens.add(new Token("titulo",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"ejeX" { Globales.tokens.add(new Token("ejeX",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"ejeY" { Globales.tokens.add(new Token("ejeY",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"tituloX" { Globales.tokens.add(new Token("tituloX",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"tituloY" { Globales.tokens.add(new Token("tituloY",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"EXEC" { Globales.tokens.add(new Token("EXEC",yyline, yycolumn, yytext())); return new Symbol(sym.EXEC, yyline, yycolumn, yytext()); }
 {WHITE}   {}
 
 {ENTERO}    { return new Symbol(sym.ENTERO, yyline, yycolumn, yytext()); }
 
 
-"char" { Globales.tokens.add(new Token("char",yyline, yycolumn, yytext())); return new Symbol(sym.TIPO, yyline, yycolumn, yytext()); }
+"char[]" { Globales.tokens.add(new Token("char[]",yyline, yycolumn, yytext())); return new Symbol(sym.TIPO, yyline, yycolumn, yytext()); }
 "double" {Globales.tokens.add(new Token("double",yyline, yycolumn, yytext()));  return new Symbol(sym.TIPO, yyline, yycolumn, yytext()); }
 ":" { Globales.tokens.add(new Token(":",yyline, yycolumn, yytext())); return new Symbol(sym.DEST, yyline, yycolumn, yytext()); }
 "arr" { Globales.tokens.add(new Token("arr",yyline, yycolumn, yytext())); return new Symbol(sym.ARR, yyline, yycolumn, yytext()); }
@@ -60,25 +69,28 @@ ID = [a-zA-Z][a-zA-Z0-9]*
 "[" { Globales.tokens.add(new Token("[",yyline, yycolumn, yytext())); return new Symbol(sym.LBRACKET, yyline, yycolumn, yytext()); }
 "]" { Globales.tokens.add(new Token("]",yyline, yycolumn, yytext())); return new Symbol(sym.RBRACKET, yyline, yycolumn, yytext()); }
 ")" { Globales.tokens.add(new Token(")",yyline, yycolumn, yytext())); return new Symbol(sym.PARDER, yyline, yycolumn, yytext()); }
+"(" {Globales.tokens.add(new Token("(",yyline, yycolumn, yytext())); return new Symbol(sym.PARE, yyline, yycolumn, yytext()); }
 "," { Globales.tokens.add(new Token(",",yyline, yycolumn, yytext())); return new Symbol(sym.COMMA, yyline, yycolumn, yytext()); }
 "CONSOLE"  { Globales.tokens.add(new Token("CONSOLE",yyline, yycolumn, yytext())); return new Symbol(sym.CON, yyline, yycolumn, yytext()); }
 "print"  { Globales.tokens.add(new Token("print",yyline, yycolumn, yytext())); return new Symbol(sym.PRINT, yyline, yycolumn, yytext()); }
 "column" {Globales.tokens.add(new Token("column",yyline, yycolumn, yytext())); return new Symbol(sym.COL, yyline, yycolumn, yytext());}
 ">" { Globales.tokens.add(new Token(">",yyline, yycolumn, yytext())); return new Symbol(sym.MAS, yyline, yycolumn, yytext()); }
 "<" { Globales.tokens.add(new Token("<",yyline, yycolumn, yytext())); return new Symbol(sym.MENOS, yyline, yycolumn, yytext()); }
-
+"=" { Globales.tokens.add(new Token("=",yyline, yycolumn, yytext())); return new Symbol(sym.IGUAL, yyline, yycolumn, yytext()); }
 "-" { Globales.tokens.add(new Token("-",yyline, yycolumn, yytext())); return new Symbol(sym.LINEA, yyline, yycolumn, yytext()); }
 ";" {Globales.tokens.add(new Token(";",yyline, yycolumn, yytext())); return new Symbol(sym.PYC, yyline, yycolumn, yytext()); }
 {ID} { return new Symbol(sym.ID, yyline, yycolumn, yytext()); }
 {CADENA}   { return new Symbol(sym.CADENA, yyline, yycolumn, yytext()); }
 {DECIMAL}   { return new Symbol(sym.DECIMAL, yyline, yycolumn, yytext()); }
-"=" { Globales.tokens.add(new Token("=",yyline, yycolumn, yytext())); return new Symbol(sym.IGUAL, yyline, yycolumn, yytext()); }
-"!"[^\n]*\n   { /* Ignorar comentarios de una línea */ }
+
+
 
 "<!"[^!]*!>{ENTERO}   { /* Ignorar comentarios multilínea */ }
 
+
+"!"[^\n]*\n   { /* Ignorar comentarios de una línea */ }
 . {
    Globales.error.add(new Token("Error lexico",yyline, yycolumn, yytext()));
  System.out.println("Lexical error: "+yytext()+" linea: "+yyline+" columna: "+yycolumn);
-    throw new RuntimeException("Error léxico en la entrada");
+    
 }

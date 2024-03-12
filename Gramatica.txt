@@ -1,0 +1,49 @@
+<list> ::= PROGRAM <list_cod> END_VAR PROGRAM
+
+<list_cod> ::= <list_cod> <list_expresion>
+            | <list_expresion>
+
+<list_expresion> ::= <list_var>
+                 | <list_arreglos>
+                 | <expresion>
+                 | <cadena>
+
+<expresion> ::= OP <expresion> COMMA <expresion> PARDER
+            | ES <tipo_arreglo> PARDER
+            | ENTERO
+            | DECIMAL
+            | CADENA
+            | ID
+
+<list_var> ::= VAR DEST TIPO DEST DEST ID MENOS LINEA <expresion> END_VAR PYC
+
+<list_arreglos> ::= ARR DEST TIPO DEST DEST AT ID MENOS LINEA LBRACKET <list_varA> RBRACKET END_VAR PYC
+
+<list_varA> ::= <list_varA> COMMA <expresion>
+            | <expresion>
+
+<tipo_arreglo> ::= LBRACKET <list_varA> RBRACKET
+               | AT ID
+
+<cadena> ::= CON DEST DEST PRINT IGUAL <imprimir> END_VAR PYC
+
+<imprimir> ::= <imprimir> COMMA <valor>
+           | <valor>
+
+<valor> ::= ENTERO
+         | DECIMAL
+         | CADENA
+         | <variab>
+
+<variab> ::= ID
+
+<grafica> ::= tgraf PARE <tipo_sentencia> EXEC tgraf END_VAR PYC PARDER END_VAR PYC
+
+<tipo_sentencia> ::= <tipo_sentencia> <sentencia>
+                | <sentencia>
+
+<sentencia> ::= dgraf DEST DEST TIPO IGUAL CADENA END_VAR PYC
+           | dgraf DEST DEST TIPO IGUAL <tipo_arreglo> END_VAR PYC
+           | dgraf DEST DEST TIPO IGUAL <tipo_arreglo> END_VAR PYC
+           | dgraf DEST DEST TIPO IGUAL CADENA END_VAR PYC
+           | dgraf DEST DEST TIPO IGUAL CADENA END_VAR PYC
