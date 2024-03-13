@@ -267,28 +267,43 @@ public class Arbol {
                 System.out.println("Estamos en if grafica");
             ArrayList<Object> d = (ArrayList<Object>) raiz.hijos.get(2).resultado;
             Grafica sentens;
-            String titulo = " ";
-            String X = " ";
-            String Y = " ";
+            String titulo = "Llanta";
+            String X = "";
+            String Y = "";
             Object ejex = 0;
             Object ejey = 0;
             
             for(Object o:d){
+                System.out.println("estamos for grafica");
                 sentens = (Grafica)o;
+                System.out.println(sentens.nombre);
+                System.out.println(sentens.contenido);
                 if(sentens.nombre.equalsIgnoreCase("titulo")){
-                    titulo = String.valueOf(sentens.contenido);
+                    
+                    System.out.println(sentens.contenido);
+                    System.out.println("si hay titulo");
+                    titulo = (String) (sentens.contenido);
                 }else if (sentens.nombre.equalsIgnoreCase("tituloX")){
-                    X = String.valueOf(sentens.contenido);
+                    System.out.println("si hat tX");
+                    X = (String) (sentens.contenido);
                 }else if (sentens.nombre.equalsIgnoreCase("tituloY")){
-                    Y = String.valueOf(sentens.contenido);
+                    System.out.println("si hay ty");
+                    Y = (String) (sentens.contenido);
                 }else if (sentens.nombre.equalsIgnoreCase("ejeX")){
+                    System.out.println("tenemos ejex");
                     System.out.println("ejeX" + sentens.contenido);
                     ejex = sentens.contenido;
                 }else if (sentens.nombre.equalsIgnoreCase("ejeY")){
+                    System.out.println("tenemos ejey");
                     ejey = sentens.contenido;
                     System.out.println("ejeY" + sentens.contenido);
                 }
             }
+            System.out.println("Titulo: " + titulo);
+            System.out.println("X: " + X);
+            System.out.println("Y: " + Y);
+            System.out.println("Eje X: " + ejex);
+            System.out.println("Eje Y: " + ejey);
             String tit = "Grafica de Barras.png";
             Globales.generarGraficaDeBarras(ejex, ejey, titulo, X, Y, tit);
             
@@ -310,40 +325,46 @@ public class Arbol {
             d.add(raiz.hijos.get(0).resultado);
             raiz.resultado = d;
         }
-        else if (raiz.lexema == "sentencia" && raiz.hijos.size() == 8){
+        else if (raiz.lexema == "sentencia1" && raiz.hijos.size() == 8){
             System.out.println("estamos antes del metodo de grafica");
-            System.out.println("hijo o " + raiz.hijos.get(0).lexema + " hijo 1 " + raiz.hijos.get(3).lexema + " hijo 2 " + raiz.hijos.get(5).lexema);
-            Grafica sentens = new Grafica(raiz.hijos.get(0).resultado.toString() , raiz.hijos.get(3).resultado.toString(), raiz.hijos.get(5).resultado);
+            System.out.println("hijo 0 " + raiz.hijos.get(0).lexema + " hijo 1 " + raiz.hijos.get(3).lexema + " hijo 2 " + raiz.hijos.get(5).resultado);
+            Grafica sentens = new Grafica(raiz.hijos.get(0).lexema, raiz.hijos.get(3).lexema, raiz.hijos.get(5).lexema);
             raiz.resultado = sentens;
         }
-        else if (raiz.lexema == "list_cod" && raiz.hijos.size() == 1){
+        else if (raiz.lexema == "sentencia2" && raiz.hijos.size() == 8){
+            System.out.println("estamos antes del metodo de grafica");
+            System.out.println("hijo 0 " + raiz.hijos.get(0).lexema + " hijo 1 " + raiz.hijos.get(3).lexema + " hijo 2 " + raiz.hijos.get(5).resultado);
+            Grafica sentens = new Grafica(raiz.hijos.get(0).lexema, raiz.hijos.get(3).lexema, raiz.hijos.get(5).resultado);
+            raiz.resultado = sentens;
+        }
+        else if ("list_cod".equals(raiz.lexema) && raiz.hijos.size() == 1){
             raiz.resultado = raiz.hijos.get(0).resultado;
         }
-        else if (raiz.lexema == "list_expresion"){
+        else if ("list_expresion".equals(raiz.lexema)){
             raiz.resultado = raiz.hijos.get(0).resultado;
-        }else if (raiz.lexema == "list"){
+        }else if ("list".equals(raiz.lexema)){
             raiz.resultado = "";
         }
-        else if (raiz.lexema=="list_var"){
+        else if ("list_var".equals(raiz.lexema)){
             
             Simbolo nuevoS = new Simbolo(raiz.hijos.get(5).lexema,raiz.hijos.get(2).lexema,raiz.hijos.get(8).resultado);
-            Globales.Variables.put(raiz.hijos.get(5).lexema.toString(), raiz.hijos.get(8).resultado);
+            Globales.Variables.put(raiz.hijos.get(5).lexema, raiz.hijos.get(8).resultado);
             Tabla.add(nuevoS);
             
         
         }else if(raiz.lexema.equals("list_arreglos")){
             
-        }else if (raiz.lexema == "Tipo_arreglo" && raiz.hijos.size()== 3){
+        }else if ("Tipo_arreglo".equals(raiz.lexema) && raiz.hijos.size()== 3){
             System.out.println("HHH" + raiz.hijos.get(1).resultado);
             raiz.resultado = raiz.hijos.get(1).resultado;
                 
-        }else if (raiz.lexema == "Tipo_arreglo"){
+        }else if ("Tipo_arreglo".equals(raiz.lexema)){
             raiz.resultado = raiz.hijos.get(1).resultado;
-        }else if (raiz.lexema == "list_varA" && raiz.hijos.size()==1){
+        }else if ("list_varA".equals(raiz.lexema) && raiz.hijos.size()==1){
             ArrayList<Object> list = new ArrayList();
             list.add(raiz.hijos.get(0).resultado);
             raiz.resultado = list;
-        }else if (raiz.lexema == "list_varA" && raiz.hijos.size()==3){
+        }else if ("list_varA".equals(raiz.lexema) && raiz.hijos.size()==3){
             ArrayList<Object> list;
             list = (ArrayList<Object>)raiz.hijos.get(0).resultado;
             System.out.println(raiz.hijos.size() + " hijos");

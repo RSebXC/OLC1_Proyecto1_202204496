@@ -257,7 +257,7 @@ RESULT = list_varA;
 ;
 
 sentencia ::= dgraf:$0 DEST:$1 DEST:$2 TIPO:$3 IGUAL:$4 CADENA:$5 END_VAR:$6 PYC:$7{:
-Arbol list_varA = new Arbol ("sentencia");
+Arbol list_varA = new Arbol ("sentencia1");
 list_varA.añadirHijo(new Arbol($0));
 list_varA.añadirHijo(new Arbol($1));
 list_varA.añadirHijo(new Arbol($2));
@@ -268,7 +268,7 @@ list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
 RESULT = list_varA;:}
    |dgraf:$0 DEST:$1 DEST:$2 TIPO:$3 IGUAL:$4 tipo_arreglo:$5 END_VAR:$6 PYC:$7{:
-Arbol list_varA = new Arbol ("sentencia");
+Arbol list_varA = new Arbol ("sentencia2");
 list_varA.añadirHijo(new Arbol($0));
 list_varA.añadirHijo(new Arbol($1));
 list_varA.añadirHijo(new Arbol($2));

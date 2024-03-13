@@ -966,7 +966,7 @@ RESULT = list_varA;
 		int $7right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String $7 = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-Arbol list_varA = new Arbol ("sentencia");
+Arbol list_varA = new Arbol ("sentencia1");
 list_varA.añadirHijo(new Arbol($0));
 list_varA.añadirHijo(new Arbol($1));
 list_varA.añadirHijo(new Arbol($2));
@@ -1009,7 +1009,7 @@ RESULT = list_varA;
 		int $7right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String $7 = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-Arbol list_varA = new Arbol ("sentencia");
+Arbol list_varA = new Arbol ("sentencia2");
 list_varA.añadirHijo(new Arbol($0));
 list_varA.añadirHijo(new Arbol($1));
 list_varA.añadirHijo(new Arbol($2));

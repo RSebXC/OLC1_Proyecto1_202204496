@@ -9,11 +9,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -92,79 +95,147 @@ public class Globales {
     }
     
     public static void generarGraficaDeBarras(Object labelsX, Object datosY, String tituloGrafica,
-                                             String tituloEjeX, String tituloEjeY, String nombreArchivo) {
-        System.out.println("entramos a graficar");
-        ArrayList<String> arrayListEtiquetas = convertirAArrayList(labelsX);
-        ArrayList<Double> arrayLis = convertir(datosY);
-
-        // Imprime el ArrayList resultante
-        System.out.println("ArrayList de Etiquetas: " + arrayListEtiquetas);
-
-        // Convierte el ArrayList a un arreglo primitivo String[]
-        String[] arregloEtiquetas = convertirAStringArray(arrayListEtiquetas);
-        Double[] arreglonum = convertir(arrayLis);
-        
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        // Agregar datos al conjunto de datos
-        for (int i = 0; i < arregloEtiquetas.length; i++) {
-            dataset.addValue(arreglonum[i], "Datos", arregloEtiquetas[i]);
-        }
-        
-
-        // Crear la gráfica
-        JFreeChart chart = ChartFactory.createBarChart(
-                tituloGrafica,
-                tituloEjeX,
-                tituloEjeY,
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
-
-        // Guardar la gráfica como una imagen PNG
-        try {
-            ChartUtilities.saveChartAsPNG(new File(nombreArchivo + ".png"), chart, 600, 400);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static ArrayList<String> convertirAArrayList(Object objectLabel) {
-        ArrayList<String> arrayListEtiquetas = new ArrayList<>();
-
-        // Verifica que el objeto de etiqueta no sea nulo
-        if (objectLabel != null) {
-            // Convierte el objeto a String y agrégalo al ArrayList
-            arrayListEtiquetas.add(objectLabel.toString());
-        }
-
-        return arrayListEtiquetas;
-    }
+                                          String tituloEjeX, String tituloEjeY, String nombreArchivo) {
+    System.out.println("Entramos a graficar");
+    System.out.println("Texto X: " + labelsX);
+    System.out.println("NUmero Y: " + datosY);
+    System.out.println(tituloGrafica + " " + tituloEjeX + " " + tituloEjeY);
     
-    private static String[] convertirAStringArray(ArrayList<String> arrayList) {
-        // Convierte el ArrayList a un arreglo primitivo String[]
-        String[] stringArray = new String[arrayList.size()];
-        return arrayList.toArray(stringArray);
-    }
-    
-    private static ArrayList<Double> convertir(Object objectLabel) {
-        ArrayList<Double> arrayListEtiquetas = new ArrayList<>();
-            System.out.println(objectLabel);
-        // Verifica que el objeto de etiqueta no sea nulo
-        if (objectLabel != null) {
-            // Convierte el objeto a String y agrégalo al ArrayList
-            arrayListEtiquetas.add(Double.valueOf(objectLabel.toString()));
-        }
+    // Convertir etiquetas a ArrayList<String>
+    ArrayList<String> arrayListEtiquetas = convertirAArrayList(labelsX);
 
-        return arrayListEtiquetas;
+    // Convertir datos a ArrayList<Double>
+    ArrayList<Double> arrayLis = convertirADoubleArrayList(datosY);
+        System.out.println(arrayLis);
+    // Imprime el ArrayList resultante
+    System.out.println("ArrayList de Etiquetas: " + arrayListEtiquetas);
+
+    // Convierte el ArrayList a un arreglo primitivo String[]
+    String[] arregloEtiquetas = arrayListEtiquetas.toArray(new String[0]);
+    System.out.println("Arreglo de Etiquetas: " + Arrays.toString(arregloEtiquetas));
+
+    // Convierte el ArrayList a un arreglo primitivo Double[]
+    Double[] arreglonum = arrayLis.toArray(new Double[0]);
+    System.out.println("Arreglo de Números: " + Arrays.toString(arreglonum));
+
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+int length = Math.min(arregloEtiquetas.length, arreglonum.length);
+
+for (int i = 0; i < length; i++) {
+    // Manejar cada etiqueta del arreglo por separado
+    String etiqueta = arregloEtiquetas[i];
+
+    // Asegurar que el índice sea válido antes de acceder al arreglo de números
+    if (i < arreglonum.length) {
+        double valor = arreglonum[i];
+        dataset.addValue(valor, "Datos", etiqueta);
+        System.out.println("Agregando al conjunto de datos: " + valor + " para " + etiqueta);
     }
+}
     
-    private static Double[] convertir(ArrayList<Double> arrayList) {
-        // Convierte el ArrayList a un arreglo primitivo String[]
-        Double[] stringArray = new Double[arrayList.size()];
-        return arrayList.toArray(stringArray);
+    // Crear la gráfica
+    JFreeChart chart = ChartFactory.createBarChart(
+            tituloGrafica,
+            tituloEjeX,
+            tituloEjeY,
+            dataset,
+            PlotOrientation.VERTICAL,
+            true,
+            true,
+            false
+    );
+
+    // Obtener el objeto del eje Y de la trama
+    NumberAxis yAxis = (NumberAxis) chart.getCategoryPlot().getRangeAxis();
+    yAxis.setRange(0, 100); 
+
+    // Guardar la gráfica como una imagen PNG
+    try {
+        ChartUtilities.saveChartAsPNG(new File(nombreArchivo + ".png"), chart, 600, 400);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
 }
 
+
+    private static ArrayList<String> convertirAArrayList(Object objectLabel) {
+    ArrayList<String> arrayListEtiquetas = new ArrayList<>();
+
+    // Verifica que el objeto de etiqueta no sea nulo y es un arreglo o una lista
+    if (objectLabel != null) {
+        if (objectLabel.getClass().isArray()) {
+            int length = java.lang.reflect.Array.getLength(objectLabel);
+
+            // Itera sobre los elementos del arreglo y conviértelos a String
+            for (int i = 0; i < length; i++) {
+                Object elemento = java.lang.reflect.Array.get(objectLabel, i);
+
+                // Trata cada elemento interno como una etiqueta
+                if (elemento != null && elemento instanceof List) {
+                    List<?> innerList = (List<?>) elemento;
+
+                    // Itera sobre los elementos internos y agrégales al ArrayList
+                    for (Object innerElement : innerList) {
+                        arrayListEtiquetas.add(innerElement.toString());
+                    }
+                } else {
+                    // Si no es una lista, simplemente convierte el elemento a String y agrégalo al ArrayList
+                    arrayListEtiquetas.add(elemento.toString());
+                }
+            }
+        } else if (objectLabel instanceof List) {
+            // Si el objeto es una lista, trata cada elemento interno como una etiqueta
+            List<?> innerList = (List<?>) objectLabel;
+
+            // Itera sobre los elementos internos y agrégales al ArrayList
+            for (Object innerElement : innerList) {
+                arrayListEtiquetas.add(innerElement.toString());
+            }
+        } else {
+            // Si no es un arreglo ni una lista, simplemente convierte el objeto a String y agrégalo al ArrayList
+            arrayListEtiquetas.add(objectLabel.toString());
+        }
+    }
+
+    return arrayListEtiquetas;
+
+}
+
+
+    
+    private static ArrayList<Double> convertirADoubleArrayList(Object datosY) {
+    ArrayList<Double> arrayLis = new ArrayList<>();
+
+    // Verifica que el objeto de datos no sea nulo y es una instancia de ArrayList
+    if (datosY != null && datosY instanceof ArrayList) {
+        try {
+            // Extrae los números del ArrayList y los agrega al ArrayList<Double>
+            ArrayList<Object> datos = (ArrayList<Object>) datosY;
+            for (Object dato : datos) {
+                if (dato instanceof Number) {
+                    // Si el elemento es un número, agrégalo directamente
+                    arrayLis.add(((Number) dato).doubleValue());
+                } else if (dato instanceof String) {
+                    // Intenta convertir el elemento como cadena a número
+                    try {
+                        arrayLis.add(Double.parseDouble((String) dato));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: No se pudo convertir la cadena a número");
+                    }
+                } else {
+                    System.out.println("Error: El elemento no es un número");
+                }
+            }
+        } catch (ClassCastException e) {
+            System.out.println("Error: Los datos no son un ArrayList");
+        }
+    }
+
+    return arrayLis;
+}
+
+
+
+}
+    
+   
