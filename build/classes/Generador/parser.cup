@@ -29,7 +29,7 @@ precedence left TIMES, DIV;
 
 start with list;
 
-list ::= PROGRAM list_cod:list_c END_VAR PROGRAM {:
+list ::= PROGRAM list_cod:list_c END_PROGRAM {:
         Arbol list = new Arbol("list");
         list.añadirHijo(list_c);
         System.out.println(list_c.lexema);
@@ -69,7 +69,14 @@ list_expresion ::= list_var:listVar {:
                                                        Arbol expresion = new Arbol("list_expresion");
                                                        expresion.añadirHijo(exp);
                                                        RESULT = expresion;
- :}            | cadena
+ :}
+               |grafica:$0
+                                                      {:
+                                                      Arbol expresion = new Arbol("list_expresion");
+                                                       expresion.añadirHijo($0);
+                                                       RESULT = expresion;
+                                                       :}
+            | cadena
                ;
 
 expresion ::= OP:$0 expresion:$1 COMMA:$2 expresion:$3 PARDER:$4 {:
@@ -232,7 +239,6 @@ list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
 list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
-Globales.generarGraficaDeBarras(labelsX, datosY, lexema, lexema, lexema, lexema);
 RESULT = list_varA;
 :};
 
@@ -272,36 +278,4 @@ list_varA.añadirHijo($5);
 list_varA.añadirHijo(new Arbol($6));
 list_varA.añadirHijo(new Arbol($7));
 RESULT = list_varA;:}
-   |dgraf:$0 DEST:$1 DEST:$2 TIPO:$3 IGUAL:$4 tipo_arreglo:$5 END_VAR:$6 PYC:$7{:
-Arbol list_varA = new Arbol ("sentencia");
-list_varA.añadirHijo(new Arbol($0));
-list_varA.añadirHijo(new Arbol($1));
-list_varA.añadirHijo(new Arbol($2));
-list_varA.añadirHijo(new Arbol($3));
-list_varA.añadirHijo(new Arbol($4));
-list_varA.añadirHijo($5);
-list_varA.añadirHijo(new Arbol($6));
-list_varA.añadirHijo(new Arbol($7));
-RESULT = list_varA;:}
-   |dgraf:$0 DEST:$1 DEST:$2 TIPO:$3 IGUAL:$4 CADENA:$5 END_VAR:$6 PYC:$7 {:
-Arbol list_varA = new Arbol ("sentencia");
-list_varA.añadirHijo(new Arbol($0));
-list_varA.añadirHijo(new Arbol($1));
-list_varA.añadirHijo(new Arbol($2));
-list_varA.añadirHijo(new Arbol($3));
-list_varA.añadirHijo(new Arbol($4));
-list_varA.añadirHijo(new Arbol($5));
-list_varA.añadirHijo(new Arbol($6));
-list_varA.añadirHijo(new Arbol($7));
-RESULT = list_varA; :}
-   |dgraf:$0 DEST:$1 DEST:$2 TIPO:$3 IGUAL:$4 CADENA:$5 END_VAR:$6 PYC:$7 {:
-Arbol list_varA = new Arbol ("sentencia");
-list_varA.añadirHijo(new Arbol($0));
-list_varA.añadirHijo(new Arbol($1));
-list_varA.añadirHijo(new Arbol($2));
-list_varA.añadirHijo(new Arbol($3));
-list_varA.añadirHijo(new Arbol($4));
-list_varA.añadirHijo(new Arbol($5));
-list_varA.añadirHijo(new Arbol($6));
-list_varA.añadirHijo(new Arbol($7));
-RESULT = list_varA; :};
+   ;

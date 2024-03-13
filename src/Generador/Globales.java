@@ -91,15 +91,24 @@ public class Globales {
         }
     }
     
-    public static void generarGraficaDeBarras(String[] labelsX, double[] datosY, String tituloGrafica,
+    public static void generarGraficaDeBarras(Object labelsX, Object datosY, String tituloGrafica,
                                              String tituloEjeX, String tituloEjeY, String nombreArchivo) {
+        System.out.println("entramos a graficar");
+        ArrayList<String> arrayListEtiquetas = convertirAArrayList(labelsX);
+        ArrayList<Double> arrayLis = convertir(datosY);
 
+        // Imprime el ArrayList resultante
+        System.out.println("ArrayList de Etiquetas: " + arrayListEtiquetas);
+
+        // Convierte el ArrayList a un arreglo primitivo String[]
+        String[] arregloEtiquetas = convertirAStringArray(arrayListEtiquetas);
+        Double[] arreglonum = convertir(arrayLis);
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Agregar datos al conjunto de datos
-        for (int i = 0; i < labelsX.length; i++) {
-            dataset.addValue(datosY[i], "Datos", labelsX[i]);
+        for (int i = 0; i < arregloEtiquetas.length; i++) {
+            dataset.addValue(arreglonum[i], "Datos", arregloEtiquetas[i]);
         }
         
 
@@ -122,6 +131,40 @@ public class Globales {
             e.printStackTrace();
         }
     }
+    private static ArrayList<String> convertirAArrayList(Object objectLabel) {
+        ArrayList<String> arrayListEtiquetas = new ArrayList<>();
+
+        // Verifica que el objeto de etiqueta no sea nulo
+        if (objectLabel != null) {
+            // Convierte el objeto a String y agrégalo al ArrayList
+            arrayListEtiquetas.add(objectLabel.toString());
+        }
+
+        return arrayListEtiquetas;
+    }
     
+    private static String[] convertirAStringArray(ArrayList<String> arrayList) {
+        // Convierte el ArrayList a un arreglo primitivo String[]
+        String[] stringArray = new String[arrayList.size()];
+        return arrayList.toArray(stringArray);
+    }
+    
+    private static ArrayList<Double> convertir(Object objectLabel) {
+        ArrayList<Double> arrayListEtiquetas = new ArrayList<>();
+            System.out.println(objectLabel);
+        // Verifica que el objeto de etiqueta no sea nulo
+        if (objectLabel != null) {
+            // Convierte el objeto a String y agrégalo al ArrayList
+            arrayListEtiquetas.add(Double.valueOf(objectLabel.toString()));
+        }
+
+        return arrayListEtiquetas;
+    }
+    
+    private static Double[] convertir(ArrayList<Double> arrayList) {
+        // Convierte el ArrayList a un arreglo primitivo String[]
+        Double[] stringArray = new Double[arrayList.size()];
+        return arrayList.toArray(stringArray);
+    }
 }
 
