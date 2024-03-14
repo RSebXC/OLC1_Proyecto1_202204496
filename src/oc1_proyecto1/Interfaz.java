@@ -220,7 +220,7 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-         String carpetaImagenes = "C:\\Users\\rodri\\Downloads\\OLC1_Proyecto1_202204496-main\\OLC1_Proyecto1_202204496-main\\";
+         String carpetaImagenes = "C:\\Users\\rodri\\Documents\\GitHub\\OLC1_Proyecto1_202204496";
 
     // Lista de nombres de las imágenes que deseas mostrar
     String[] nombresImagenes = {"Grafica de Pie.jpg", "Grafica de Barras.jpg", "Histograma.jpg", "Grafica de Linea"};
