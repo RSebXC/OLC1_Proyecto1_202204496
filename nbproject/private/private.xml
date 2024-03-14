@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/Globales.java</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/Token.java</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/Grafica.java</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/oc1_proyecto1/Interfaz.java</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/parser.cup</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/Arbol.java</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/Parser.java</file>
-            <file>file:/C:/Users/rodri/Documents/GitHub/OLC1_Proyecto1_202204496/src/Generador/lex.jflex</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -267,12 +267,13 @@ public class Arbol {
                 System.out.println("Estamos en if grafica");
             ArrayList<Object> d = (ArrayList<Object>) raiz.hijos.get(2).resultado;
             Grafica sentens;
-            String titulo = "Llanta";
+            System.out.println(raiz.hijos.get(0).lexema);
+            if ("graphBar".equalsIgnoreCase(raiz.hijos.get(0).lexema)){
+                String titulo = "Llanta";
             String X = "";
             String Y = "";
             Object ejex = 0;
             Object ejey = 0;
-            
             for(Object o:d){
                 System.out.println("estamos for grafica");
                 sentens = (Grafica)o;
@@ -304,8 +305,106 @@ public class Arbol {
             System.out.println("Y: " + Y);
             System.out.println("Eje X: " + ejex);
             System.out.println("Eje Y: " + ejey);
-            String tit = "Grafica de Barras.png";
+            String tit = "Grafica de Barras";
             Globales.generarGraficaDeBarras(ejex, ejey, titulo, X, Y, tit);
+            }else if ("graphPie".equalsIgnoreCase(raiz.hijos.get(0).lexema)){
+                String titulo = " ";
+            Object ejex = 0;
+            Object ejey = 0;
+            for(Object o:d){
+                System.out.println("estamos for grafica");
+                sentens = (Grafica)o;
+                System.out.println(sentens.nombre);
+                System.out.println(sentens.contenido);
+                if(sentens.nombre.equalsIgnoreCase("titulo")){
+                    
+                    System.out.println(sentens.contenido);
+                    System.out.println("si hay titulo");
+                    titulo = (String) (sentens.contenido);
+                
+                }else if (sentens.nombre.equalsIgnoreCase("label")){
+                    System.out.println("tenemos ejex");
+                    System.out.println("ejeX" + sentens.contenido);
+                    ejex = sentens.contenido;
+                }else if (sentens.nombre.equalsIgnoreCase("values")){
+                    System.out.println("tenemos ejey");
+                    ejey = sentens.contenido;
+                    System.out.println("ejeY" + sentens.contenido);
+                }
+            }
+            System.out.println("Titulo: " + titulo);
+            System.out.println("Eje X: " + ejex);
+            System.out.println("Eje Y: " + ejey);
+            String tit = "Grafica de Pie";
+            Globales.generarGraficaDePie(ejex, ejey, titulo, tit);
+            
+            }else if ("graphLine".equalsIgnoreCase(raiz.hijos.get(0).lexema)){
+                String titulo = " ";
+            String X = "";
+            String Y = "";
+            Object ejex = 0;
+            Object ejey = 0;
+            for(Object o:d){
+                System.out.println("estamos for grafica");
+                sentens = (Grafica)o;
+                System.out.println(sentens.nombre);
+                System.out.println(sentens.contenido);
+                if(sentens.nombre.equalsIgnoreCase("titulo")){
+                    
+                    System.out.println(sentens.contenido);
+                    System.out.println("si hay titulo");
+                    titulo = (String) (sentens.contenido);
+                }else if (sentens.nombre.equalsIgnoreCase("tituloX")){
+                    System.out.println("si hat tX");
+                    X = (String) (sentens.contenido);
+                }else if (sentens.nombre.equalsIgnoreCase("tituloY")){
+                    System.out.println("si hay ty");
+                    Y = (String) (sentens.contenido);
+                }else if (sentens.nombre.equalsIgnoreCase("ejeX")){
+                    System.out.println("tenemos ejex");
+                    System.out.println("ejeX" + sentens.contenido);
+                    ejex = sentens.contenido;
+                }else if (sentens.nombre.equalsIgnoreCase("ejeY")){
+                    System.out.println("tenemos ejey");
+                    ejey = sentens.contenido;
+                    System.out.println("ejeY" + sentens.contenido);
+                }
+            }
+            System.out.println("Titulo: " + titulo);
+            System.out.println("X: " + X);
+            System.out.println("Y: " + Y);
+            System.out.println("Eje X: " + ejex);
+            System.out.println("Eje Y: " + ejey);
+            String tit = "Grafica de Linea";
+            Globales.generarGraficaDeLinea(ejex, ejey, titulo, X, Y, tit);
+            }else if ("Histogram".equalsIgnoreCase(raiz.hijos.get(0).lexema)){
+                String titulo = " ";
+            
+            Object ejey = 0;
+            for(Object o:d){
+                System.out.println("estamos for grafica");
+                sentens = (Grafica)o;
+                System.out.println(sentens.nombre);
+                System.out.println(sentens.contenido);
+                if(sentens.nombre.equalsIgnoreCase("titulo")){
+                    
+                    System.out.println(sentens.contenido);
+                    System.out.println("si hay titulo");
+                    titulo = (String) (sentens.contenido);
+                
+                }else if (sentens.nombre.equalsIgnoreCase("values")){
+                    System.out.println("tenemos ejey");
+                    ejey = sentens.contenido;
+                    System.out.println("ejeY" + sentens.contenido);
+                }
+            }
+            System.out.println("Titulo: " + titulo);
+       
+            System.out.println("Eje Y: " + ejey);
+            String tit = "Histograma";
+            Globales.generarHistograma(titulo, ejey, tit);
+            
+            }
             
             
         }

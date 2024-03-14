@@ -115,8 +115,8 @@ expresion ::= OP:$0 expresion:$1 COMMA:$2 expresion:$3 PARDER:$4 {:
 :}
 | ID:$1 {:
     Arbol expresion = new Arbol("expresion");
-    
-    expresion.añadirHijo(new Arbol($1));
+    Object idis = Globales.Variables.get($1.toString());
+    expresion.añadirHijo(new Arbol(idis.toString()));
     RESULT = expresion;
 :}
 ;
@@ -198,6 +198,7 @@ RESULT = list_varA;
 ;
 
 cadena ::= CON DEST DEST PRINT IGUAL imprimir:$5 END_VAR PYC {:
+    Globales.guardarConsola($5.toString());
     System.out.println($5.toString());
 
 :}
@@ -222,8 +223,9 @@ RESULT = $2.toString();
 RESULT = vari;
 :}
 ;
+
 variab ::= ID:idi{:
-RESULT = Globales.Variables.get(idi.toString());
+RESULT = Globales.Variables.get(idi.toString()).toString();
 :}
 ;
 

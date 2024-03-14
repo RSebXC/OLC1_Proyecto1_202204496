@@ -48,11 +48,15 @@ ID = [a-zA-Z][a-zA-Z0-9]*
 "Max(" { Globales.tokens.add(new Token("Mex",yyline, yycolumn, yytext())); return new Symbol(sym.ES, yyline, yycolumn, yytext()); }
 "Min(" { Globales.tokens.add(new Token("Min",yyline, yycolumn, yytext())); return new Symbol(sym.ES, yyline, yycolumn, yytext()); }
 "graphbar" { Globales.tokens.add(new Token("graphBar",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
-"graphlie" { Globales.tokens.add(new Token("graphPie",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
+"graphPie" { Globales.tokens.add(new Token("graphPie",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
 "graphLine" { Globales.tokens.add(new Token("graphLine",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
 "titulo" { Globales.tokens.add(new Token("titulo",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
 "ejeX" { Globales.tokens.add(new Token("ejeX",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
 "ejeY" { Globales.tokens.add(new Token("ejeY",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"label" { Globales.tokens.add(new Token("label",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"values" { Globales.tokens.add(new Token("values",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
+"Histogram" { Globales.tokens.add(new Token("Histrogram",yyline, yycolumn, yytext())); return new Symbol(sym.tgraf, yyline, yycolumn, yytext()); }
+
 "tituloX" { Globales.tokens.add(new Token("tituloX",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
 "tituloY" { Globales.tokens.add(new Token("tituloY",yyline, yycolumn, yytext())); return new Symbol(sym.dgraf, yyline, yycolumn, yytext()); }
 "EXEC" { Globales.tokens.add(new Token("EXEC",yyline, yycolumn, yytext())); return new Symbol(sym.EXEC, yyline, yycolumn, yytext()); }
@@ -71,7 +75,7 @@ ID = [a-zA-Z][a-zA-Z0-9]*
 ")" { Globales.tokens.add(new Token(")",yyline, yycolumn, yytext())); return new Symbol(sym.PARDER, yyline, yycolumn, yytext()); }
 "(" {Globales.tokens.add(new Token("(",yyline, yycolumn, yytext())); return new Symbol(sym.PARE, yyline, yycolumn, yytext()); }
 "," { Globales.tokens.add(new Token(",",yyline, yycolumn, yytext())); return new Symbol(sym.COMMA, yyline, yycolumn, yytext()); }
-"CONSOLE"  { Globales.tokens.add(new Token("CONSOLE",yyline, yycolumn, yytext())); return new Symbol(sym.CON, yyline, yycolumn, yytext()); }
+"console"  { Globales.tokens.add(new Token("CONSOLE",yyline, yycolumn, yytext())); return new Symbol(sym.CON, yyline, yycolumn, yytext()); }
 "print"  { Globales.tokens.add(new Token("print",yyline, yycolumn, yytext())); return new Symbol(sym.PRINT, yyline, yycolumn, yytext()); }
 "column" {Globales.tokens.add(new Token("column",yyline, yycolumn, yytext())); return new Symbol(sym.COL, yyline, yycolumn, yytext());}
 ">" { Globales.tokens.add(new Token(">",yyline, yycolumn, yytext())); return new Symbol(sym.MAS, yyline, yycolumn, yytext()); }
